@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EntityFunctionalityManager : MonoBehaviour
 {
-
     #region Static check
     public static EntityFunctionalityManager instance { get; private set; }
 
@@ -36,16 +35,12 @@ public class EntityFunctionalityManager : MonoBehaviour
         }
         Debug.LogWarning("Functionality " + name + "Not Found In " + gameObject.name);
         return default;
-     
     }
-
 }
 
 [Serializable]
 public struct EnityFunctionalitystruct
 {
-    
-
     [Header("Functionality Name Without Capital Letters ")]
     [Tooltip("Searching Name for the Functionality")]
     public string Name;

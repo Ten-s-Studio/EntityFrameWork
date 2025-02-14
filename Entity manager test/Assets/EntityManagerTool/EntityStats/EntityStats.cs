@@ -13,7 +13,6 @@ public class EntityStats : ScriptableObject
 
 
     [Header("Resistances")]
-
     [Tooltip("Resistance to heat, all heatsource will have X precent of reduced effect")]
     [Range(0f,100f)]
     public int heatResistance = 0;

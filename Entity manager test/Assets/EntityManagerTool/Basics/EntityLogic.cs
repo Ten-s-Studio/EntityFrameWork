@@ -51,7 +51,6 @@ public class EntityLogic : MonoBehaviour
             {
                 enityFunctionality.Activate(this, value);
             }
-           
         }
    
     }
