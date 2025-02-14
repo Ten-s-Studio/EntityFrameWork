@@ -21,18 +21,20 @@ public class EntityFunctionalityManager : MonoBehaviour
         }
     }
     #endregion
+    //list of all the functionality options ANY entity can Choose from
+    public List<EnityFunctionalitystruct> AllFunctionalities;
 
-    public List<enityFunctionalitystruct> AllFunctionalities;
 
     public EnityFunctionality GetFunctionality(string name)
     {
-        foreach(enityFunctionalitystruct enityFunctionalitystructin in AllFunctionalities)
+        foreach(EnityFunctionalitystruct enityFunctionalitystructin in AllFunctionalities)
         {
            if(enityFunctionalitystructin.Name == name)
            {
                 return enityFunctionalitystructin.Functionality;
            }
         }
+        Debug.LogWarning("Functionality " + name + "Not Found In " + gameObject.name);
         return default;
      
     }
@@ -40,9 +42,14 @@ public class EntityFunctionalityManager : MonoBehaviour
 }
 
 [Serializable]
-public struct enityFunctionalitystruct
+public struct EnityFunctionalitystruct
 {
+    
+
+    [Header("Functionality Name Without Capital Letters ")]
+    [Tooltip("Searching Name for the Functionality")]
     public string Name;
+    [Header("Script Instance of the Functionality")]
     public EnityFunctionality Functionality;
     
 }

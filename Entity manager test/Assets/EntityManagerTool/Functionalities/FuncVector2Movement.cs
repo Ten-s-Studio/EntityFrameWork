@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Vector2MovementFunc : MovementFunc
+public class FuncVector2Movement : FuncMovement
 {
     public override void Activate<T>(EntityLogic logic, T value)
     {

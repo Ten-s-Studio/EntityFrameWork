@@ -22,39 +22,34 @@ public class PlayerEntityInputManager : MonoBehaviour
         {
             instance = this;
         }
+
+        PlayerEntitySetup();
     }
     #endregion
 
+    [Header("Enity The Player Is Controlling")]
     public GameObject currentEntity;
 
-    private EntityLogic entityLogic;
 
+    //List of Functionalities the player can choose from 
+    private FuncVector2Movement movement;
+    private FuncAttack attack;
+
+
+
+    //private Viarables
+
+    private EntityLogic entityLogic;
     private bool noEnityLogic = true;
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Start()
     {
-        EntitySetup();
+        //not in the awake due to the EntityFunctionalityManager first needing to compleet his setup in the awake
+        FindAllFunctionalities();
     }
 
-    private void OnMove(InputValue value)
-    {
-        if (noEnityLogic)
-            return;
-        
-        entityLogic.PerformFuntionality<Vector2>(EntityFunctionalityManager.instance.GetFunctionality("vector2movement"), value.Get<Vector2>());
-    }
-    public void OnAttack(InputValue value)
-    {
-        if (noEnityLogic)
-            return;
-
-        entityLogic.PerformFuntionality(EntityFunctionalityManager.instance.GetFunctionality("attack"), value);
-    }
-
-
-    private bool EntitySetup()
+    private bool PlayerEntitySetup()
     {
         if (currentEntity != null)
         {
@@ -69,12 +64,39 @@ public class PlayerEntityInputManager : MonoBehaviour
         return false;
     }
 
+    private void FindAllFunctionalities()
+    {
+        movement = (FuncVector2Movement)EntityFunctionalityManager.instance.GetFunctionality("vector2movement");
+        attack = (FuncAttack)EntityFunctionalityManager.instance.GetFunctionality("attack");
+
+    }
+
+
+    #region Functions based on Player Input system
+    private void OnMove(InputValue value)
+    {
+        if (noEnityLogic)
+            return;
+        
+        entityLogic.PerformFuntionality(movement, value.Get<Vector2>());
+    }
+    public void OnAttack(InputValue value)
+    {
+        if (noEnityLogic)
+            return;
+
+        entityLogic.PerformFuntionality(attack, value);
+    }
+
+    #endregion
+
+    #region Support Functions
     public void SetNewEnity(GameObject newEntity)
     {
         GameObject obj = currentEntity;
 
         currentEntity = newEntity;
-        if (!EntitySetup())
+        if (!PlayerEntitySetup())
         {
             if (obj != null)
             {
@@ -82,7 +104,7 @@ public class PlayerEntityInputManager : MonoBehaviour
             }
         }
     }
-
+    #endregion
 }
 
 

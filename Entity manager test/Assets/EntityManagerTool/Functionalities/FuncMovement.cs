@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementFunc : EnityFunctionality
+public class FuncMovement : EnityFunctionality
 {
     public static Guid funcTypeGuid { get; private set; } = Guid.NewGuid();
 

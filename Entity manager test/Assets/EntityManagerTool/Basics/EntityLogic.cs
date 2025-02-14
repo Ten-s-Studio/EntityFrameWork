@@ -7,38 +7,42 @@ using UnityEngine.InputSystem;
 
 public class EntityLogic : MonoBehaviour
 {
+    //Settings displaying in the inspector
     [Header("Entity Settings")]
     public EntityStats stats;
 
+    //Components
     public Rigidbody2D rb { get; private set; }
 
  
 
+    //Hidden Inspector Variables
 
     [HideInInspector]
     public List<EnityFunctionality> Functionalities = new(10);
 
-
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
     private void Awake()
     {
+        EntitySetup();
+    }
+
+    //Setup 
+    private void EntitySetup()
+    {
+        rb = GetComponent<Rigidbody2D>();
         var enityFunctionalities = GetComponents<EnityFunctionality>();
         foreach (var enityFunctionality in enityFunctionalities)
         {
-            Functionalities.Add(enityFunctionality);      
+            Functionalities.Add(enityFunctionality);
         }
-        if(stats == null) 
-        { 
-           stats= new EntityStats();
+        if (stats == null)
+        {
+            stats = ScriptableObject.CreateInstance<EntityStats>();
             Debug.LogWarning("No EnityStats FOUND, On: " + gameObject.name);
         }
     }
 
+    //overall class that activates a Functionality
     public void PerformFuntionality<T>(EnityFunctionality func, T value)
     {
         foreach (EnityFunctionality enityFunctionality in Functionalities)
