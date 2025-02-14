@@ -1,50 +1,56 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
-public class EntityFunctionalityManager : MonoBehaviour
+public static class EntityFunctionalityManager
 {
-    #region Static check
-    public static EntityFunctionalityManager instance { get; private set; }
+    private static Dictionary<string, Type> functionalityTypes = new Dictionary<string, Type>();
 
-    private void Awake()
+    static EntityFunctionalityManager()
     {
-        if (instance != null && instance != this)
+        LoadFunctionalities();
+    }
+
+    private static void LoadFunctionalities()
+    {
+        // Find all classes that inherit from EnityFunctionality
+        var functionalityClasses = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(EnityFunctionality)))
+            .ToList();
+
+        Debug.Log($"Found {functionalityClasses.Count} functionalities");
+
+        foreach (var type in functionalityClasses)
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            instance = this;
+            Debug.Log($"Registered functionality: {type.Name}");
+            functionalityTypes[type.Name] = type;
         }
     }
-    #endregion
-    //list of all the functionality options ANY entity can Choose from
-    public List<EnityFunctionalitystruct> AllFunctionalities;
 
-
-    public EnityFunctionality GetFunctionality(string name)
+    public static Type GetFunctionality(string name)
     {
-        foreach(EnityFunctionalitystruct enityFunctionalitystructin in AllFunctionalities)
+        if (functionalityTypes.TryGetValue(name, out var type))
         {
-           if(enityFunctionalitystructin.Name == name)
-           {
-                return enityFunctionalitystructin.Functionality;
-           }
+            return type;
         }
-        Debug.LogWarning("Functionality " + name + "Not Found In " + gameObject.name);
-        return default;
-    }
-}
 
-[Serializable]
-public struct EnityFunctionalitystruct
-{
-    [Header("Functionality Name Without Capital Letters ")]
-    [Tooltip("Searching Name for the Functionality")]
-    public string Name;
-    [Header("Script Instance of the Functionality")]
-    public EnityFunctionality Functionality;
-    
+        Debug.LogWarning($"Functionality '{name}' not found.");
+        return null;
+    }
+
+    public static EnityFunctionality CreateFunctionalityInstance(string name, GameObject target)
+    {
+        Type type = GetFunctionality(name);
+        if (type == null) return null;
+
+        return target.AddComponent(type) as EnityFunctionality;
+    }
+
+    public static IEnumerable<string> GetAllFunctionalityNames()
+    {
+        return functionalityTypes.Keys;
+    }
 }

@@ -43,11 +43,11 @@ public class EntityLogic : MonoBehaviour
     }
 
     //overall class that activates a Functionality
-    public void PerformFuntionality<T>(EnityFunctionality func, T value)
+    public void PerformFuntionality<T>(Type funcType, T value)
     {
         foreach (EnityFunctionality enityFunctionality in Functionalities)
         {
-            if (enityFunctionality.GetType() == func.GetType())
+            if (enityFunctionality.GetType() == funcType)
             {
                 enityFunctionality.Activate(this, value);
             }
