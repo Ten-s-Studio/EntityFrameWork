@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class FuncInteract2D : EnityFunctionality
 {
-    Type interactableType = EntityFunctionalityManager.GetFunctionality("FuncInteractable");
+    Type interactableType = typeof(FuncInteractable);
     public float distance = 5f;
     public LayerMask interactableLayer;
     private Vector2 gizmoDirection;

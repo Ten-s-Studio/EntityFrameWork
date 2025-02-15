@@ -31,9 +31,9 @@ public class PlayerEntityInputManager : MonoBehaviour
 
     private Vector2 LastDirection;
 
-    private Type moveType = EntityFunctionalityManager.GetFunctionality("FuncVector2Movement");
-    private Type attackType = EntityFunctionalityManager.GetFunctionality("FuncAttack");
-    private Type interactType = EntityFunctionalityManager.GetFunctionality("FuncInteract2D");
+    private Type moveType = typeof(FuncVector2Movement);
+    private Type attackType = typeof(FuncAttack);
+    private Type interactType = typeof(FuncInteract2D);
 
     void Start()
     {
