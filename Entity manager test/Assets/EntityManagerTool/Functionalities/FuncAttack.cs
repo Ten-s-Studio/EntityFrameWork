@@ -10,6 +10,7 @@ public class FuncAttack : EnityFunctionality
     public static Guid funcTypeGuid { get; private set; } = Guid.NewGuid();
     public override void Activate<T>(EntityLogic logic, T value)
     {
+        Debug.Log("Attacked");
        // Need ItemHandler first
        // castPosition = logic.weaponTransform;
        // Instantiate(Ability, castPosition.position, Quaternion.identity);
