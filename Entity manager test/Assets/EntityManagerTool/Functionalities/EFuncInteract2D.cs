@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class FuncInteract2D : EnityFunctionality
+public class EFuncInteract2D : EnityFunctionality
 {
-    Type interactableType = typeof(FuncInteractable);
+    Type interactableType = typeof(EFuncInteractable);
     public float distance = 5f;
     public LayerMask interactableLayer;
     private Vector2 gizmoDirection;

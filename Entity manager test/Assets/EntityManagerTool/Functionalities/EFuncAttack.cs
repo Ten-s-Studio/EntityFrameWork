@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FuncAttack : EnityFunctionality
+public class EFuncAttack : EnityFunctionality
 {
     public GameObject Ability;
 

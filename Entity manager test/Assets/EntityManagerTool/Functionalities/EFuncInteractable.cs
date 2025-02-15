@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FuncInteractable : EnityFunctionality
+public class EFuncInteractable : EnityFunctionality
 {
     public UnityEvent interactableEvent;
     public override void Activate<T>(EntityLogic logic, T value){

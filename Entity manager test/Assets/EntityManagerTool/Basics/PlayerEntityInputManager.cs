@@ -31,9 +31,9 @@ public class PlayerEntityInputManager : MonoBehaviour
 
     private Vector2 LastDirection;
 
-    private Type moveType = typeof(FuncVector2Movement);
-    private Type attackType = typeof(FuncAttack);
-    private Type interactType = typeof(FuncInteract2D);
+    private Type moveType = typeof(EFuncVector2Movement);
+    private Type attackType = typeof(EFuncAttack);
+    private Type interactType = typeof(EFuncInteract2D);
 
     void Start()
     {
