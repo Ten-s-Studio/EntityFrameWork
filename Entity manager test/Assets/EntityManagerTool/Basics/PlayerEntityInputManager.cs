@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerEntityInputManager : MonoBehaviour
 {
-
-
     #region Static check
     public static PlayerEntityInputManager instance { get; private set; }
 
@@ -31,8 +29,12 @@ public class PlayerEntityInputManager : MonoBehaviour
 
     private bool noEnityLogic = true;
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Vector2 LastDirection;
+
+    private Type moveType = EntityFunctionalityManager.GetFunctionality("FuncVector2Movement");
+    private Type attackType = EntityFunctionalityManager.GetFunctionality("FuncAttack");
+    private Type interactType = EntityFunctionalityManager.GetFunctionality("FuncInteract2D");
+
     void Start()
     {
         EntitySetup();
@@ -43,16 +45,20 @@ public class PlayerEntityInputManager : MonoBehaviour
         if (noEnityLogic)
             return;
         
-        entityLogic.PerformFuntionality<Vector2>(EntityFunctionalityManager.GetFunctionality("FuncVector2Movement"), value.Get<Vector2>());
+        LastDirection = value.Get<Vector2>();
+        entityLogic.PerformFuntionality<Vector2>(moveType, LastDirection);
     }
     public void OnAttack(InputValue value)
     {
         if (noEnityLogic)
             return;
 
-        entityLogic.PerformFuntionality(EntityFunctionalityManager.GetFunctionality("FuncAttack"), value);
+        entityLogic.PerformFuntionality(attackType, value);
     }
-
+    void OnInteract(InputValue value){
+        Debug.Log("tried to interact: " + entityLogic.gameObject.name);
+        entityLogic.PerformFuntionality<Vector2>(interactType, LastDirection);
+    }
 
     private bool EntitySetup()
     {
