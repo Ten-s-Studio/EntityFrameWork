@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class EFuncInteract2D : EnityFunctionality
+public class EFuncInteract2D : MonoBehaviour, IEnityFunctionality
 {
     Type interactableType = typeof(EFuncInteractable);
     public float distance = 5f;
     public LayerMask interactableLayer;
     private Vector2 gizmoDirection;
     
-    public override void Activate<T>(EntityLogic logic, T value)
+    public void Activate<T>(EntityLogic logic, T value)
     {
         if (value is Vector2 newValue)
         {

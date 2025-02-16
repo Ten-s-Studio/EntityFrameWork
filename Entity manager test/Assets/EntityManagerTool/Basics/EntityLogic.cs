@@ -14,12 +14,7 @@ public class EntityLogic : MonoBehaviour
     //Components
     public Rigidbody2D rb { get; private set; }
 
- 
-
-    //Hidden Inspector Variables
-
-    [HideInInspector]
-    public List<EnityFunctionality> Functionalities = new(10);
+    private List<IEnityFunctionality> functionalities = new(10);
 
     private void Awake()
     {
@@ -30,11 +25,9 @@ public class EntityLogic : MonoBehaviour
     private void EntitySetup()
     {
         rb = GetComponent<Rigidbody2D>();
-        var enityFunctionalities = GetComponents<EnityFunctionality>();
-        foreach (var enityFunctionality in enityFunctionalities)
-        {
-            Functionalities.Add(enityFunctionality);
-        }
+
+        functionalities = GetComponents<IEnityFunctionality>().ToList();
+
         if (stats == null)
         {
             stats = ScriptableObject.CreateInstance<EntityStats>();
@@ -43,15 +36,16 @@ public class EntityLogic : MonoBehaviour
     }
 
     //overall class that activates a Functionality
-    public void PerformFuntionality<T>(Type funcType, T value)
+    public void PerformFuntionality<TFunc, TValue>(TValue value)
+        where TFunc : IEnityFunctionality
     {
-        foreach (EnityFunctionality enityFunctionality in Functionalities)
+        foreach (IEnityFunctionality enityFunctionality in functionalities)
         {
-            if (enityFunctionality.GetType() == funcType)
+            if(enityFunctionality is TFunc func)
             {
-                enityFunctionality.Activate(this, value);
+                func.Activate(this, value);
+                break;
             }
         }
-   
     }
 }

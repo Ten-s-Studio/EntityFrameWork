@@ -6,7 +6,7 @@ public interface IAction
 {
     void Execute(EntityLogic logic, InputValue value);
 }
-public abstract class EnityFunctionality : MonoBehaviour
+public interface IEnityFunctionality 
 { 
-    public abstract void Activate<T>(EntityLogic logic, T value);
+    public void Activate<T>(EntityLogic logic, T value);
 }

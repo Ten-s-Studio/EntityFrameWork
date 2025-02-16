@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EFuncVector2Movement : EFuncMovement
+public class EFuncVector2Movement : MonoBehaviour, IEFuncMovement
 {
-    public override void Activate<T>(EntityLogic logic, T value)
+    public void Activate<T>(EntityLogic logic, T value)
     {
         if (value is Vector2 newValue)
         {

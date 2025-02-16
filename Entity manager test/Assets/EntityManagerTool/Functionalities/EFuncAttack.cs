@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EFuncAttack : EnityFunctionality
+public class EFuncAttack : MonoBehaviour, IEnityFunctionality
 {
     public GameObject Ability;
 
     private Transform castPosition;
     public static Guid funcTypeGuid { get; private set; } = Guid.NewGuid();
-    public override void Activate<T>(EntityLogic logic, T value)
+    public void Activate<T>(EntityLogic logic, T value)
     {
         Debug.Log("Attacked");
        // Need ItemHandler first

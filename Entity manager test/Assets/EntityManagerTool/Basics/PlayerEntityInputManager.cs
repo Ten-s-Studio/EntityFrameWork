@@ -31,10 +31,6 @@ public class PlayerEntityInputManager : MonoBehaviour
 
     private Vector2 LastDirection;
 
-    private Type moveType = typeof(EFuncVector2Movement);
-    private Type attackType = typeof(EFuncAttack);
-    private Type interactType = typeof(EFuncInteract2D);
-
     void Start()
     {
         EntitySetup();
@@ -46,18 +42,18 @@ public class PlayerEntityInputManager : MonoBehaviour
             return;
         
         LastDirection = value.Get<Vector2>();
-        entityLogic.PerformFuntionality<Vector2>(moveType, LastDirection);
+        entityLogic.PerformFuntionality<IEFuncMovement,Vector2>(LastDirection);
     }
     public void OnAttack(InputValue value)
     {
         if (noEnityLogic)
             return;
 
-        entityLogic.PerformFuntionality(attackType, value);
+        entityLogic.PerformFuntionality<EFuncInteractable,InputValue>(value);
     }
     void OnInteract(InputValue value){
         Debug.Log("tried to interact: " + entityLogic.gameObject.name);
-        entityLogic.PerformFuntionality<Vector2>(interactType, LastDirection);
+        entityLogic.PerformFuntionality<EFuncInteractable,Vector2>(LastDirection);
     }
 
     private bool EntitySetup()
