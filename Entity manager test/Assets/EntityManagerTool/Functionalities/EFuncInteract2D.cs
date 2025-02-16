@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class EFuncInteract2D : MonoBehaviour, IEnityFunctionality
 {
-    Type interactableType = typeof(EFuncInteractable);
     public float distance = 5f;
     public LayerMask interactableLayer;
     private Vector2 gizmoDirection;
@@ -19,7 +18,7 @@ public class EFuncInteract2D : MonoBehaviour, IEnityFunctionality
                 return;
             }
             EntityLogic interactableEntity = hit.collider.gameObject.GetComponent<EntityLogic>();
-            interactableEntity?.PerformFuntionality(interactableType, 1);
+            interactableEntity?.PerformFuntionality<EFuncInteractable,float>(1);
 
             gizmoDirection = newValue;
         }
